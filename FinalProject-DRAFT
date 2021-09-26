@@ -5,7 +5,7 @@ Project Draft'''
 #Note 1: I collaborated with classmates Kyle Huber and Dylan Kirbeby-Carlyle on parts of this program as I have been struggling with connecting to Open Weather Map site
 #Note 2: Much of the code in this program was adapted from https://www.simplifiedpython.net/openweathermap-api-python/
 #Note 3: I am still unable to get the locatin information to pass to the web service. I welcome any feedback.
-#Note 4: I also know I need to add code to prompt user to try again if a locatin is invalid.
+#Note 4: I also know I need to add code to prompt user to try again if a location is invalid.
 
 #Import required modules
 import requests
@@ -50,12 +50,15 @@ def anotherLocation():
 #Function to get forecast based on Zip Code
 def forecastZip():
     zip = input("Please enter a Zip Code: ")
+    #Need to add an if statement to prompt user to try again if Zip Code is invalid
     finalURL = baseURL + "appid=" + apiKey + "&zip=" + zip
     makeRequest(finalURL)
     
 # Function to get forecast based on City
 def forecastCity():
     city = input("Please enter a city Name : ")
+    #Need to add an if statement to prompt user to try again if City is invalid
+    #May need to add prompt for state
     finalURL = baseURL + "appid=" + apiKey + "&q=" + city
     makeRequest(finalURL)
 
