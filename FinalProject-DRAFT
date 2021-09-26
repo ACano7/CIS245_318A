@@ -1,0 +1,79 @@
+'''Andrew Cano
+CIS245-318A
+Project Draft'''
+
+#Note 1: I collaborated with classmates Kyle Huber and Dylan Kirbeby-Carlyle on parts of this program as I have been struggling with connecting to Open Weather Map site
+#Note 2: Much of the code in this program was adapted from https://www.simplifiedpython.net/openweathermap-api-python/
+#Note 3: I am still unable to get the locatin information to pass to the web service. I welcome any feedback.
+#Note 4: I also know I need to add code to prompt user to try again if a locatin is invalid.
+
+#Import required modules
+import requests
+from pprint import pprint
+
+#API key obtained from Open Weather Maps
+apiKey = "9e084b18bb3ef9e56dbdd1b0bb8410b9"
+
+#Varible that stores the URL
+baseURL = "http://api.openweathermap.org/data/2.5/weather?"
+
+# Welcome message
+print("Welcome! Find out the weather in your area.\n")
+
+def makeRequest(url):
+    try:
+        r= requests.get(url)
+        response = r.json()
+        if r.status_code == 200:
+            print(f"The connection was successful with status code of: {r.status_code}")
+            weather = requests.get(finalURL).json()
+            print("\nCurrent weather for your location: \n")
+            pprint(weather)
+    except requests.exceptions.RequestException as error:
+        print(error)
+
+# Function to end program
+def endProgram():
+    print("Thank you for using this program!")
+
+# Function to get additional forecasts
+def anotherLocation():
+    loop = True
+    while loop:
+        addLocation = input("Would you like the forecast for another location (y/n)? ")
+        if addLocation.lower() == 'y':
+            getLocation()
+        elif addLocation.lower() == 'n':
+            loop = False
+            endProgram()
+
+#Function to get forecast based on Zip Code
+def forecastZip():
+    zip = input("Please enter a Zip Code: ")
+    finalURL = baseURL + "appid=" + apiKey + "&zip=" + zip
+    makeRequest(finalURL)
+    
+# Function to get forecast based on City
+def forecastCity():
+    city = input("Please enter a city Name : ")
+    finalURL = baseURL + "appid=" + apiKey + "&q=" + city
+    makeRequest(finalURL)
+
+# Function to get forecast based on user choice
+def getForecast(lookupChoice):
+    if lookupChoice == 1:
+        forecastZip()
+    if lookupChoice == 2:
+        forecastCity()
+
+# Main function
+def getLocation():
+    print("You can get the forecast for your location with either of the following options: ")
+    lookupOptions = {1: 'Zip Code', 2: 'City'}
+    for key, value in lookupOptions.items():
+        print(f"{key}: {value}")
+    lookupChoice = int(input("Please enter the number of the option you choose: "))
+    getForecast(lookupChoice)
+    anotherLocation()
+
+getLocation()
