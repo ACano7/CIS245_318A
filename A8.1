@@ -1,0 +1,62 @@
+'''
+Andrew Cano
+CIS 245-318A
+Assignment 8.1
+'''
+#Import libraries and modules
+import os
+import json
+from os.path import join
+
+#Function for user to validate data
+def validate(filePath):
+    validation = input("\nIs this information correct (y,n)?")
+    if validation.lower() == 'y':
+        print("\nThank you for adding your information to the directory!")
+    elif validation.lower() == 'n':
+        print("\nOkay, let's try again.\n")
+        directoryInfo(filePath)
+    
+#Function to gather user input
+def directoryInfo(filePath):
+    userInfo = {"First Name": '', "Last Name": '', "Street Address": '', "City": '', "State": '', "Zip Code": '', "Phone Number": ''}
+    userFname = input("Please enter your First Name: ")
+    userInfo["First Name"] = userFname
+    userLname = input("Please enter your Last Name: ")
+    userInfo["Last Name"] = userLname
+    userAddress = input("Please enter your Street Address: ")
+    userInfo["Street Address"] = userAddress
+    userCity = input("Please enter your City: ")
+    userInfo["City"] = userCity
+    userState = input("Please enter your State: ")
+    userInfo["State"] = userState
+    userZip = input("Please enter your Zip Code: ")
+    userInfo["Zip Code"] = userZip
+    userPhone = input("Please enter your Phone Number: ")
+    userInfo["Phone Number"] = userPhone
+    with open(filePath, 'w') as fileObject:
+        fileObject.write(userFname + ", ")
+        fileObject.write(userLname + ", ")
+        fileObject.write(userAddress + ", ")
+        fileObject.write(userCity + ", ")
+        fileObject.write(userState + ", ")
+        fileObject.write(userZip + ", ")
+        fileObject.write(userPhone)
+    with open(filePath) as fileObject:
+        for line in fileObject:
+            print(line)
+    validate(filePath)
+
+#Main function
+def createFile():
+    directory = input("Please enter the name of the directory you would like to save the file in: ")
+    directoryExists = os.path.exists(directory)
+    if directoryExists == True:
+        fileName = input("Please enter the name of the new file: ")
+        filePath = join(directory, fileName)
+        directoryInfo(filePath)
+    else:
+        print("Sorry that directory does not exist. Please try again.\n")
+        createFile()
+
+createFile()
