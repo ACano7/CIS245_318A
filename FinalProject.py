@@ -21,10 +21,11 @@ print("Welcome! Find out the weather in your area.\n")
 def makeRequest(finalURL):
     try:
         r = requests.get(finalURL)
-        response = r.json()
-        if response.status_code != "404":
-            print(f"The connection was successful with status code of: {r.status_code}")
-            weather = requests.get(finalURL).json()
+        _response = r.json()
+        code_key = _response["cod"] # This key holds the status code in JSON object
+        if str(code_key) != "404": # If resource found
+            print(f"The connection was successful with status code of: {code_key}")
+            weather = _response["main"]
             print("\nCurrent weather for your location: \n")
             pprint(weather)
         else:
@@ -52,7 +53,7 @@ def anotherLocation():
 def forecastZip():
     zip = input("Please enter a Zip Code: ")
     #Need to add an if statement to prompt user to try again if Zip Code is invalid
-    finalURL = baseURL + "q=" + zip + "&appid=" + apiKey
+    finalURL = baseURL + "zip=" + zip + "&appid=" + apiKey
     makeRequest(finalURL)
     
 # Function to get forecast based on City
