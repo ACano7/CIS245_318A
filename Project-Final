@@ -53,14 +53,14 @@ def anotherLocation():
 def forecastZip():
     zip = input("Please enter a Zip Code: ")
     #Need to add an if statement to prompt user to try again if Zip Code is invalid
-    finalURL = baseURL + "zip=" + zip + "&appid=" + apiKey
+    finalURL = baseURL + "zip=" + zip + "&units=imperial" + "&appid=" + apiKey
     makeRequest(finalURL)
     
 # Function to get forecast based on City
 def forecastCity():
     city = input("Please enter a city Name : ")
     #Need to add an if statement to prompt user to try again if City is invalid
-    finalURL = baseURL + "q=" + city + "&appid=" + apiKey
+    finalURL = baseURL + "q=" + city + "&units=imperial" + "&appid=" + apiKey
     makeRequest(finalURL)
 
 # Function to get forecast based on user choice
